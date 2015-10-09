@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using Windows_XNA_Tanks.Texture;
 
 namespace Windows_XNA_Tanks
 {
@@ -18,7 +19,7 @@ namespace Windows_XNA_Tanks
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-
+        Sprite sprite;
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -36,6 +37,9 @@ namespace Windows_XNA_Tanks
             // TODO: Add your initialization logic here
 
             base.Initialize();
+
+            sprite = new Sprite(Content);
+
         }
 
         /// <summary>
@@ -46,7 +50,7 @@ namespace Windows_XNA_Tanks
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
+            //sprite.loadContent();
             // TODO: use this.Content to load your game content here
         }
 
