@@ -12,16 +12,15 @@ namespace Windows_XNA_Tanks.Texture
         private Texture2D _texture;
         private ContentManager _content;
 
-        public Sprite(ContentManager cm)
+        public Sprite(ContentManager content)
         {
-            _content = cm;
-            this.loadContent();
+            _content = content;
+            //this.loadContent();
         }
 
-        public void loadContent(){
-
-            _content.Load<Texture2D>("grass");
-
-        }
+        //public Texture2D LoadContent()
+        //{
+        //    _content.Load<Texture2D>("grass");
+        //}
     }
 }

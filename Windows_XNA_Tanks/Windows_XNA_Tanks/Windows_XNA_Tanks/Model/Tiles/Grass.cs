@@ -5,13 +5,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Windows_XNA_Tanks.Model.Tile
+namespace Windows_XNA_Tanks.Model.Tiles
 {
-    class Grass : Entity
+    class Grass : Tile
     {
         public Grass(ContentManager content)
         {
-            Texture = content.Load<Texture2D>("grass");
+            Texture = content.Load<Texture2D>("tiles/grass");
         }
     }
 }

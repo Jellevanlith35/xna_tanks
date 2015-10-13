@@ -9,6 +9,9 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using Windows_XNA_Tanks.Texture;
+using Windows_XNA_Tanks.Model;
+using Windows_XNA_Tanks.Model.Tiles;
+using System.IO;
 
 namespace Windows_XNA_Tanks
 {
@@ -20,6 +23,7 @@ namespace Windows_XNA_Tanks
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Sprite sprite;
+        Map map;
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -50,6 +54,9 @@ namespace Windows_XNA_Tanks
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            map = new Map();
+            string path = @"C:/testmap.txt";
+            map.GenerateMap(Content, graphics, path);
             //sprite.loadContent();
             // TODO: use this.Content to load your game content here
         }
@@ -62,6 +69,8 @@ namespace Windows_XNA_Tanks
         {
             // TODO: Unload any non ContentManager content here
         }
+
+        
 
         /// <summary>
         /// Allows the game to run logic such as updating the world,
@@ -87,8 +96,12 @@ namespace Windows_XNA_Tanks
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
-
+            spriteBatch.Begin();
+            foreach(Tile tile in map.Tiles)
+            {
+                tile.Draw(spriteBatch);
+            }
+            spriteBatch.End();
             base.Draw(gameTime);
         }
     }
