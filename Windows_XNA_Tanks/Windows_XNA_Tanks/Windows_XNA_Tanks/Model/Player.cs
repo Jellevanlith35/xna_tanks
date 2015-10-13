@@ -5,10 +5,10 @@ using System.Text;
 
 namespace Windows_XNA_Tanks.Model
 {
-    class Player : Tank
+    /*class Player : Tank
     {
 
 
 
-    }
+    }*/
 }
