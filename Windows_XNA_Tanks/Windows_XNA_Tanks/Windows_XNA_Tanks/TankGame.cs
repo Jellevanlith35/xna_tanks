@@ -18,13 +18,13 @@ namespace Windows_XNA_Tanks
     /// <summary>
     /// This is the main type for your game
     /// </summary>
-    public class Game1 : Microsoft.Xna.Framework.Game
+    public class TankGame : Microsoft.Xna.Framework.Game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Sprite sprite;
         Map map;
-        public Game1()
+        public TankGame()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
