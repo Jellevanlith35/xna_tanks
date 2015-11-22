@@ -9,9 +9,8 @@ namespace Windows_XNA_Tanks.Model.Tiles
 {
     class Wall : Tile
     {
-        public Wall(ContentManager content)
-        {
-            Texture = content.Load<Texture2D>("tiles/wall");
-        }
+      
+
+
     }
 }

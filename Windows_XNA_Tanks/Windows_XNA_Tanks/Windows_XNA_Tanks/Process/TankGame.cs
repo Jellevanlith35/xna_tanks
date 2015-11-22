@@ -12,6 +12,7 @@ using Windows_XNA_Tanks.Texture;
 using Windows_XNA_Tanks.Model;
 using Windows_XNA_Tanks.Model.Tiles;
 using System.IO;
+using Windows_XNA_Tanks.Process;
 
 namespace Windows_XNA_Tanks
 {
@@ -22,8 +23,16 @@ namespace Windows_XNA_Tanks
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        Sprite sprite;
         Map map;
+        Parser parser;
+
+        // Tiles - Background
+        public Texture2D grass, street, wall;
+
+        // Tank
+        private Texture2D tank;
+
+       
         public TankGame()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -41,9 +50,8 @@ namespace Windows_XNA_Tanks
             // TODO: Add your initialization logic here
 
             base.Initialize();
-
-            sprite = new Sprite(Content);
-
+            
+            parser = new Parser();
         }
 
         /// <summary>
@@ -54,9 +62,19 @@ namespace Windows_XNA_Tanks
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            map = new Map();
-            string path = @"C:/testmap.txt";
-            map.GenerateMap(Content, graphics, path);
+
+            // Tiles - Background
+            grass = Content.Load<Texture2D>("Tiles/grass");
+            street = Content.Load<Texture2D>("Tiles/street");
+            wall = Content.Load<Texture2D>("Tiles/wall");
+
+            // Tank
+            tank = Content.Load<Texture2D>("Entity/tank");
+
+            // Loading map
+            map = parser.LoadMap(1);
+
+            
             //sprite.loadContent();
             // TODO: use this.Content to load your game content here
         }
@@ -83,6 +101,8 @@ namespace Windows_XNA_Tanks
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
+
+           
             // TODO: Add your update logic here
 
             base.Update(gameTime);
@@ -97,10 +117,14 @@ namespace Windows_XNA_Tanks
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             spriteBatch.Begin();
-            foreach(Tile tile in map.Tiles)
-            {
-                tile.Draw(spriteBatch);
-            }
+
+            map.Draw(spriteBatch);
+
+            //foreach(Tile tile in map.Tiles)
+            //{
+            //    tile.Draw(spriteBatch);
+            //}
+
             spriteBatch.End();
             base.Draw(gameTime);
         }

@@ -9,9 +9,8 @@ namespace Windows_XNA_Tanks.Model.Tiles
 {
     class Grass : Tile
     {
-        public Grass(ContentManager content)
-        {
-            Texture = content.Load<Texture2D>("tiles/grass");
-        }
+       
+
+
     }
 }

@@ -13,6 +13,11 @@ namespace Windows_XNA_Tanks.Model.Tiles
         private Point _point;
         private Rectangle _rectangle;
 
+        public Tile Left { get; set;}
+        public Tile Top { get; set; }
+        public Tile Right { get; set; }
+        public Tile Bottom { get; set; }
+
         #region Methods
 
         public void Draw(SpriteBatch spritebatch)
