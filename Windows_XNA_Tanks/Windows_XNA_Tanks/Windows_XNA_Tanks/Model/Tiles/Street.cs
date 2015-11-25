@@ -10,7 +10,12 @@ namespace Windows_XNA_Tanks.Model.Tiles
     class Street : Tile
     {
         
+        Texture2D texture;
 
+        public Street(Texture2D texture)
+        {
+            this.texture = texture;
+        }
 
     }
 }

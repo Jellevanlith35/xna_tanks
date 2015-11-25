@@ -11,13 +11,20 @@ namespace Windows_XNA_Tanks.Process
     class Parser
     {
         private Map map;
+        private TankGame tankGame;
+
+        public Parser(TankGame tankGame)
+        {
+            this.tankGame = tankGame;
+        }
 
         public Map LoadMap(int mapId)
         {
+            map = new Map();
             map.Width = 0;
             int height = 0;
 
-            string filePath = String.Concat("..\\..\\Worlds\\map", mapId, ".txt");
+            string filePath = String.Concat("C:\\Users\\Wilfred\\Desktop\\GameDev shit\\Tanks\\xna_tanks\\Windows_XNA_Tanks\\Windows_XNA_Tanks\\Windows_XNA_Tanks\\Worlds\\map", mapId, ".txt");
             string[] unparsedLines = File.ReadAllLines(filePath);
             List<Tile> previousLine = null;
             bool firstUnparsedLine = true;
@@ -63,14 +70,14 @@ namespace Windows_XNA_Tanks.Process
 
                 switch (unparsedLine[index])
                 {
-                    case ' ':
-                        tile = new Grass();
+                    case ',':
+                        tile = new Grass(tankGame.grass);
                         break;
-                    case '~':
-                        tile = new Street();
+                    case '|':
+                        tile = new Street(tankGame.street);
                         break;
-                    case '<':
-                        tile = new Wall();
+                    case '#':
+                        tile = new Wall(tankGame.wall);
                         break;
                     default:
                         throw new Exception();

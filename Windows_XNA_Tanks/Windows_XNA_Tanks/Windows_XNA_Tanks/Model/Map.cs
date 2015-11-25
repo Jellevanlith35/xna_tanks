@@ -17,20 +17,23 @@ namespace Windows_XNA_Tanks.Model
         public int Width { get; set; }
         public Tile Origin { get; set; }
 
-        public Map()
-        {
-           _tanks = new List<Tank>();
-        }
         
-        public List<Tank> Tanks
-        {
-            get { return _tanks; }
-            set { _tanks = value; }
-        }
-
         public void Drawmap(SpriteBatch spritebatch)
         {
+            Tile outerTile = Origin;
 
+            while (outerTile != null)
+            {
+                Tile innerTile = outerTile;
+
+                while (innerTile != null)
+                {
+                    innerTile.Draw(spritebatch);
+                    innerTile = innerTile.Right;
+                }
+
+                outerTile = outerTile.Bottom;
+            }
         }
     }
 }

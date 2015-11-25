@@ -8,7 +8,6 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
-using Windows_XNA_Tanks.Texture;
 using Windows_XNA_Tanks.Model;
 using Windows_XNA_Tanks.Model.Tiles;
 using System.IO;
@@ -51,7 +50,10 @@ namespace Windows_XNA_Tanks
 
             base.Initialize();
             
-            parser = new Parser();
+            parser = new Parser(this);
+            
+            // Loading map
+            map = parser.LoadMap(1);
         }
 
         /// <summary>
@@ -71,8 +73,7 @@ namespace Windows_XNA_Tanks
             // Tank
             tank = Content.Load<Texture2D>("Entity/tank");
 
-            // Loading map
-            map = parser.LoadMap(1);
+           
 
             
             //sprite.loadContent();
@@ -118,7 +119,7 @@ namespace Windows_XNA_Tanks
 
             spriteBatch.Begin();
 
-            map.Draw(spriteBatch);
+            map.Drawmap(spriteBatch);
 
             //foreach(Tile tile in map.Tiles)
             //{

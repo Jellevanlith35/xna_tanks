@@ -9,8 +9,12 @@ namespace Windows_XNA_Tanks.Model.Tiles
 {
     class Wall : Tile
     {
+        Texture2D texture;
       
-
+        public Wall(Texture2D texture)
+        {
+            this.texture = texture;
+        }
 
     }
 }
