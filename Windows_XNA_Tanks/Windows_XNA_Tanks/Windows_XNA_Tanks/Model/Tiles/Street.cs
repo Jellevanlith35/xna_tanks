@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Content;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -9,9 +10,11 @@ namespace Windows_XNA_Tanks.Model.Tiles
 {
     class Street : Tile
     {
-        public Street(ContentManager content)
+
+        public Street(Texture2D texture, Point point)
+            : base(texture, point)
         {
-            Texture = content.Load<Texture2D>("tiles/street");
+           
         }
     }
 }

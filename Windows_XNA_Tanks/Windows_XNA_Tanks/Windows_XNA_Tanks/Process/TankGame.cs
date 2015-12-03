@@ -8,10 +8,10 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
-using Windows_XNA_Tanks.Texture;
 using Windows_XNA_Tanks.Model;
 using Windows_XNA_Tanks.Model.Tiles;
 using System.IO;
+using Windows_XNA_Tanks.Process;
 
 namespace Windows_XNA_Tanks
 {
@@ -22,8 +22,18 @@ namespace Windows_XNA_Tanks
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        Sprite sprite;
         Map map;
+        Parser parser;
+
+        private const int TILE_SIZE= 32;
+
+        // Tiles - Background
+        public Texture2D grass, street, wall;
+
+        // Tank
+        private Texture2D tank;
+
+       
         public TankGame()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -41,9 +51,14 @@ namespace Windows_XNA_Tanks
             // TODO: Add your initialization logic here
 
             base.Initialize();
-
-            sprite = new Sprite(Content);
-
+            
+            parser = new Parser(this);
+            
+            // Loading map
+            map = parser.LoadMap(1);
+            graphics.PreferredBackBufferHeight = map.Height * TILE_SIZE;
+            graphics.PreferredBackBufferWidth = map.Width * TILE_SIZE;
+            graphics.ApplyChanges();
         }
 
         /// <summary>
@@ -54,9 +69,18 @@ namespace Windows_XNA_Tanks
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            map = new Map();
-            string path = @"C:/testmap.txt";
-            map.GenerateMap(Content, graphics, path);
+
+            // Tiles - Background
+            grass = Content.Load<Texture2D>("Tiles/grass");
+            street = Content.Load<Texture2D>("Tiles/street");
+            wall = Content.Load<Texture2D>("Tiles/wall");
+
+            // Tank
+            tank = Content.Load<Texture2D>("Entity/tank");
+
+           
+
+            
             //sprite.loadContent();
             // TODO: use this.Content to load your game content here
         }
@@ -83,6 +107,8 @@ namespace Windows_XNA_Tanks
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
+
+           
             // TODO: Add your update logic here
 
             base.Update(gameTime);
@@ -97,10 +123,14 @@ namespace Windows_XNA_Tanks
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             spriteBatch.Begin();
-            foreach(Tile tile in map.Tiles)
-            {
-                tile.Draw(spriteBatch);
-            }
+
+            map.Drawmap(spriteBatch);
+
+            //foreach(Tile tile in map.Tiles)
+            //{
+            //    tile.Draw(spriteBatch);
+            //}
+
             spriteBatch.End();
             base.Draw(gameTime);
         }
