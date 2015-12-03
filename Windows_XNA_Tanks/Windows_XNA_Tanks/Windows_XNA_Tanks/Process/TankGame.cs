@@ -12,6 +12,7 @@ using Windows_XNA_Tanks.Model;
 using Windows_XNA_Tanks.Model.Tiles;
 using System.IO;
 using Windows_XNA_Tanks.Process;
+using Windows_XNA_Tanks_Map_Builder;
 
 namespace Windows_XNA_Tanks
 {
@@ -78,6 +79,11 @@ namespace Windows_XNA_Tanks
             // Tank
             tank = Content.Load<Texture2D>("Entity/tank");
 
+            using (MapBuilder mapBuilder = new MapBuilder(20, 20))
+            {
+                mapBuilder.Run();
+            }
+
            
 
             
@@ -106,7 +112,6 @@ namespace Windows_XNA_Tanks
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
-
 
            
             // TODO: Add your update logic here
