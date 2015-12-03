@@ -9,9 +9,9 @@ namespace Windows_XNA_Tanks.Model.Tiles
 {
     abstract class Tile
     {
-        private Texture2D _texture;
-        private Point _point;
-        private Rectangle _rectangle;
+        public Texture2D _texture;
+        public Point _point;
+        public Rectangle _rectangle;
 
         public Tile Left { get; set;}
         public Tile Top { get; set; }
@@ -20,10 +20,18 @@ namespace Windows_XNA_Tanks.Model.Tiles
 
         #region Methods
 
+        public Tile(Texture2D texture, Point point)
+        {
+            this.Texture = texture;
+            this.Point = point;
+            this.Rectangle = new Rectangle(_point.X, _point.Y, 32, 32);
+        }
+
         public void Draw(SpriteBatch spritebatch)
         {
             spritebatch.Draw(_texture, _rectangle, Color.White);
         }
+        
         #endregion Methods
 
         #region Properties

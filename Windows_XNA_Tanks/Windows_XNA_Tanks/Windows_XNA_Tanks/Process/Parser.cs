@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -12,17 +13,21 @@ namespace Windows_XNA_Tanks.Process
     {
         private Map map;
         private TankGame tankGame;
+        private const int TILE_SIZE = 32;
+        private int height;
+        
 
         public Parser(TankGame tankGame)
         {
             this.tankGame = tankGame;
+            height = 0;
         }
 
         public Map LoadMap(int mapId)
         {
             map = new Map();
             map.Width = 0;
-            int height = 0;
+            
 
             string filePath = String.Concat("..\\..\\..\\Worlds\\map", mapId, ".txt");
             string[] unparsedLines = File.ReadAllLines(filePath);
@@ -67,17 +72,18 @@ namespace Windows_XNA_Tanks.Process
             for (int index = 0; index < unparsedLine.Length; index++)
             {
                 Tile tile;
+                Point point = new Point(index * TILE_SIZE, height * TILE_SIZE);
 
                 switch (unparsedLine[index])
                 {
                     case ',':
-                        tile = new Grass(tankGame.grass);
+                        tile = new Grass(tankGame.grass, point);
                         break;
                     case '|':
-                        tile = new Street(tankGame.street);
+                        tile = new Street(tankGame.street, point);
                         break;
                     case '#':
-                        tile = new Wall(tankGame.wall);
+                        tile = new Wall(tankGame.wall, point);
                         break;
                     default:
                         throw new Exception();

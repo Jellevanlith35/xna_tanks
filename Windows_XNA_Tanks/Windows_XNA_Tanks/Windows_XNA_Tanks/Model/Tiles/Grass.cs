@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Content;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -11,12 +12,10 @@ namespace Windows_XNA_Tanks.Model.Tiles
     class Grass : Tile
     {
 
-        Texture2D texture;
-
-        public Grass(Texture2D texture)
+        public Grass(Texture2D texture, Point point)
+            : base(texture, point)
         {
-            this.texture = texture;
+           
         }
-
     }
 }

@@ -25,6 +25,8 @@ namespace Windows_XNA_Tanks
         Map map;
         Parser parser;
 
+        private const int TILE_SIZE= 32;
+
         // Tiles - Background
         public Texture2D grass, street, wall;
 
@@ -54,6 +56,9 @@ namespace Windows_XNA_Tanks
             
             // Loading map
             map = parser.LoadMap(1);
+            graphics.PreferredBackBufferHeight = map.Height * TILE_SIZE;
+            graphics.PreferredBackBufferWidth = map.Width * TILE_SIZE;
+            graphics.ApplyChanges();
         }
 
         /// <summary>
