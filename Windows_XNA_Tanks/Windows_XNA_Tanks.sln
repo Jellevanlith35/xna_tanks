@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
+VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Windows_XNA_Tanks", "Windows_XNA_Tanks\Windows_XNA_Tanks\Windows_XNA_Tanks.csproj", "{26A6712E-8ECB-47DC-8673-1B7C732A9CF4}"
 EndProject
-Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "Windows_XNA_TanksContent", "Windows_XNA_Tanks\Windows_XNA_TanksContent\Windows_XNA_TanksContent.contentproj", "{91A4965A-C05F-4FE9-927E-029D994D3772}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Windows_XNA_TanksContent", "Windows_XNA_Tanks\Windows_XNA_TanksContent\Windows_XNA_TanksContent.contentproj", "{91A4965A-C05F-4FE9-927E-029D994D3772}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

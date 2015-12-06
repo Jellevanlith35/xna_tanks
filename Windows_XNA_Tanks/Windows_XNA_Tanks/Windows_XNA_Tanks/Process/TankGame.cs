@@ -125,6 +125,7 @@ namespace Windows_XNA_Tanks
             spriteBatch.Begin();
 
             map.Drawmap(spriteBatch);
+            
 
             //foreach(Tile tile in map.Tiles)
             //{

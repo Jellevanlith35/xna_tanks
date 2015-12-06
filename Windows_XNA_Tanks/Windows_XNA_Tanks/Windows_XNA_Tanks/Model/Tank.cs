@@ -8,30 +8,24 @@ using System.Text;
 
 namespace Windows_XNA_Tanks.Model
 {
-    class Tank : Entity
+    public class Tank : Entity
     {
-        private Point _startPoint;
         // Constructor
 
-        public Tank(ContentManager content, Point startPoint)
+        public Tank(Texture2D texture, Point point)
+            : base(texture, point)
         {
-            Texture = content.Load<Texture2D>("tiles/tank");
-            _startPoint = startPoint;
-            Point = _startPoint;
+        
         }
 
         #region Methods
 
-        public void Update()
+        public override void Update()
         {
 
         }
+
         #endregion Methods
 
-        public Point StartPoint
-        {
-            get { return _startPoint; }
-            set { _startPoint = value; }
-        }
     }
 }

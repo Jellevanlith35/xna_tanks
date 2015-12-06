@@ -7,13 +7,22 @@ using System.Text;
 
 namespace Windows_XNA_Tanks.Model
 {
-    abstract class Entity
+    public abstract class Entity
     {
         private Texture2D _texture;
         private Point _point;
         private Rectangle _rectangle;
 
+        public Entity(Texture2D texture, Point point)
+        {
+            this.Texture = texture;
+            this.Point = point;
+            this.Rectangle = new Rectangle(_point.X, _point.Y, 32, 32);
+        }
+
         #region Methods
+
+        public abstract void Update();
 
         public void Draw(SpriteBatch spritebatch)
         {
