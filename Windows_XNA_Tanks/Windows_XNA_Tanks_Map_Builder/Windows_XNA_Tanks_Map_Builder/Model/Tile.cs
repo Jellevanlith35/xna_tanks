@@ -10,5 +10,6 @@ namespace Windows_XNA_Tanks_Map_Builder.Model
         Grass,
         Street,
         Wall,
+        DefaultGrid
     }
 }

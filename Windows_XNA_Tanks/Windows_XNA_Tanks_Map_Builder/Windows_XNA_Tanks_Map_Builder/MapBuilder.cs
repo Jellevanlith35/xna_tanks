@@ -9,17 +9,25 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using Windows_XNA_Tanks_Map_Builder.Model;
+using System.IO;
+using System.Runtime.InteropServices;
 
 namespace Windows_XNA_Tanks_Map_Builder
 {
     public class MapBuilder : Microsoft.Xna.Framework.Game
     {
-        GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
+        // Way to show a MessageBox in XNA game studio
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        private static extern uint MessageBox(IntPtr hWnd, String text, String caption, uint type);
+
+
+        private GraphicsDeviceManager graphics;
+        private SpriteBatch spriteBatch;
+        private KeyboardState keyboardState;
         private int x;
         private int y;
         private Grid grid;
-        private List<Texture2D> textures;
+        private Dictionary<char,Texture2D> textures;
         private Texture2D selectedTexture;
         private MouseState mouseState;
         private const int TILE_SIZE = 32;
@@ -38,7 +46,7 @@ namespace Windows_XNA_Tanks_Map_Builder
             IsMouseVisible = true;
             grid = new Grid(x, y, Content);
             CreateTextures();
-            selectedTexture = textures.FirstOrDefault();
+            selectedTexture = textures.FirstOrDefault().Value;
             base.Initialize();
         }
 
@@ -57,10 +65,10 @@ namespace Windows_XNA_Tanks_Map_Builder
 
         private void CreateTextures()
         {
-            textures = new List<Texture2D>();
-            textures.Add(Content.Load<Texture2D>("Tiles/grass"));
-            textures.Add(Content.Load<Texture2D>("Tiles/street"));
-            textures.Add(Content.Load<Texture2D>("Tiles/wall"));
+            textures = new Dictionary<char,Texture2D>();
+            textures.Add(',',Content.Load<Texture2D>("Tiles/grass"));
+            textures.Add('|',Content.Load<Texture2D>("Tiles/street"));
+            textures.Add('#',Content.Load<Texture2D>("Tiles/wall"));
         }
 
         protected override void UnloadContent()
@@ -73,14 +81,42 @@ namespace Windows_XNA_Tanks_Map_Builder
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
+            keyboardState = Keyboard.GetState();
+
             SelectTexture();
             CheckMouseOnGrid();
 
-            KeyboardState keyboardState = Keyboard.GetState();
             if (keyboardState.IsKeyDown(Keys.F5))
             {
-                var jaja = 0;
+                // According the MessageBox value 'Yes' is equal to 6 and 'No' is equal to 7
+                if (MessageBox(new IntPtr(0), "Are you sure to save the current game map?", "Save current game map", 4) == 6)
+                {
+                    // Map to the other game project
+                    string path = "..\\..\\..\\..\\..\\Windows_XNA_Tanks\\Windows_XNA_Tanks\\Worlds\\EckingToTheLithingBeastMap.txt";
+
+                    if (File.Exists(path))
+                    {
+                        if (MessageBox(new IntPtr(0), "Are you sure to overwrite the existing game map?", "Overwrite existing game map", 4) == 6)
+                            File.Delete(path);
+
+                        else return;
+                    }
+
+                    using (StreamWriter streamWriter = File.CreateText(path))
+                    {
+                        for (int j = 0; j < y; j++)
+                        {
+                            for (int i = 0; i < x; i++)
+                                streamWriter.Write(textures.FirstOrDefault(t => t.Value.Equals(grid.Tiles[i, j])).Key);
+
+                            streamWriter.WriteLine();
+                        }
+                        streamWriter.Close();
+                    }
+                }
             }
+            else if (keyboardState.IsKeyDown(Keys.Escape))
+                this.Exit();
 
 
             base.Update(gameTime);
@@ -90,14 +126,14 @@ namespace Windows_XNA_Tanks_Map_Builder
         {
             int index = 1;
             mouseState = Mouse.GetState();
-            foreach (Texture2D texture in textures)
+            foreach (KeyValuePair<char, Texture2D> entry in textures)
             {
                 if (mouseState.X >= (x * TILE_SIZE + 16) && mouseState.X <= (x * TILE_SIZE + 48))
                 {
                     if (mouseState.Y >= (index * 40) && mouseState.Y <= (index * 40) + TILE_SIZE)
                     {
                         if (mouseState.LeftButton == ButtonState.Pressed)
-                            selectedTexture = texture;
+                            selectedTexture = entry.Value;
                     }
                 }
                 index++;
@@ -126,9 +162,9 @@ namespace Windows_XNA_Tanks_Map_Builder
             spriteBatch.Begin();
             grid.Draw(spriteBatch, TILE_SIZE);
             int index = 0;
-            foreach (Texture2D texture in textures)
+            foreach (KeyValuePair<char, Texture2D> entry in textures)
             {
-                spriteBatch.Draw(texture, new Rectangle((x * TILE_SIZE) + 16, TILE_SIZE + (index * 40), TILE_SIZE, TILE_SIZE), Color.White);
+                spriteBatch.Draw(entry.Value, new Rectangle((x * TILE_SIZE) + 16, TILE_SIZE + (index * 40), TILE_SIZE, TILE_SIZE), Color.White);
                 index++;
             }
             spriteBatch.End();
