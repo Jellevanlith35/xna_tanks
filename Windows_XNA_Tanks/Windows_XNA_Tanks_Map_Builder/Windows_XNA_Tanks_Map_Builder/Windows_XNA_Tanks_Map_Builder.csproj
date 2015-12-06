@@ -1,20 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <ProjectGuid>{26A6712E-8ECB-47DC-8673-1B7C732A9CF4}</ProjectGuid>
+    <ProjectGuid>{353A0E9E-2891-4828-B5E3-2F30590D7FFB}</ProjectGuid>
     <ProjectTypeGuids>{6D335F3A-9D43-41b4-9D22-F6F17C4BE596};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Windows_XNA_Tanks</RootNamespace>
-    <AssemblyName>Windows_XNA_Tanks</AssemblyName>
+    <RootNamespace>Windows_XNA_Tanks_Map_Builder</RootNamespace>
+    <AssemblyName>Windows_XNA_Tanks_Map_Builder</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <XnaFrameworkVersion>v4.0</XnaFrameworkVersion>
     <XnaPlatform>Windows</XnaPlatform>
     <XnaProfile>Reach</XnaProfile>
-    <XnaCrossPlatformGroupID>f4a0983b-05ea-46ef-9430-aca9d9ed7d3c</XnaCrossPlatformGroupID>
+    <XnaCrossPlatformGroupID>ccaee074-e564-400f-bb5d-95a466c55f2f</XnaCrossPlatformGroupID>
     <XnaOutputType>Game</XnaOutputType>
     <ApplicationIcon>Game.ico</ApplicationIcon>
     <Thumbnail>GameThumbnail.png</Thumbnail>
@@ -72,33 +72,21 @@
     <Reference Include="System.Net" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\Entity.cs" />
-    <Compile Include="Model\Map.cs" />
-    <Compile Include="Model\Player.cs" />
-    <Compile Include="Model\Tank.cs" />
-    <Compile Include="Model\Tiles\Grass.cs" />
-    <Compile Include="Model\Tiles\Wall.cs" />
-    <Compile Include="Model\Tiles\Street.cs" />
-    <Compile Include="Model\Tiles\Tile.cs" />
-    <Compile Include="Process\Parser.cs" />
+    <Compile Include="Model\Grid.cs" />
+    <Compile Include="Model\Tile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="Process\TankGame.cs" />
+    <Compile Include="MapBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />
     <Content Include="GameThumbnail.png">
       <XnaPlatformSpecific>true</XnaPlatformSpecific>
     </Content>
-    <Content Include="Worlds\map1.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Windows_XNA_Tanks_Map_Builder\Windows_XNA_Tanks_Map_Builder\Windows_XNA_Tanks_Map_Builder.csproj">
-      <Project>{353a0e9e-2891-4828-b5e3-2f30590d7ffb}</Project>
-      <Name>Windows_XNA_Tanks_Map_Builder</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Windows_XNA_TanksContent\Windows_XNA_TanksContent.contentproj">
-      <Name>Windows_XNA_TanksContent</Name>
+    <ProjectReference Include="..\Windows_XNA_Tanks_Map_BuilderContent\Windows_XNA_Tanks_Map_BuilderContent.contentproj">
+      <Name>Windows_XNA_Tanks_Map_BuilderContent</Name>
       <XnaReferenceType>Content</XnaReferenceType>
     </ProjectReference>
   </ItemGroup>
