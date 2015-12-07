@@ -25,14 +25,15 @@ namespace Windows_XNA_Tanks
         SpriteBatch spriteBatch;
         Map map;
         Parser parser;
+        Player vermeulengbeast;
 
         private const int TILE_SIZE= 32;
 
         // Tiles - Background
-        public Texture2D grass, street, wall;
+        public Texture2D grassImage, streetImage, wallImage;
 
         // Tank
-        private Texture2D tank;
+        private Texture2D tankImage;
 
        
         public TankGame()
@@ -60,6 +61,12 @@ namespace Windows_XNA_Tanks
             graphics.PreferredBackBufferHeight = map.Height * TILE_SIZE;
             graphics.PreferredBackBufferWidth = map.Width * TILE_SIZE;
             graphics.ApplyChanges();
+
+            // Creating a Player + his adding a tank to his tanks + chosing the tank he wil use + giving him his position
+            vermeulengbeast = new Player();
+            vermeulengbeast.addTanktoPlayersTanks(new Tank(tankImage));
+            vermeulengbeast.UsedTank = vermeulengbeast.tanks[0];
+            vermeulengbeast.UsedTank.createPointandRetangle(map.startPoints[0]);
         }
 
         /// <summary>
@@ -72,17 +79,17 @@ namespace Windows_XNA_Tanks
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // Tiles - Background
-            grass = Content.Load<Texture2D>("Tiles/grass");
-            street = Content.Load<Texture2D>("Tiles/street");
-            wall = Content.Load<Texture2D>("Tiles/wall");
+            grassImage = Content.Load<Texture2D>("Tiles/grass");
+            streetImage = Content.Load<Texture2D>("Tiles/street");
+            wallImage = Content.Load<Texture2D>("Tiles/wall");
 
             // Tank
-            tank = Content.Load<Texture2D>("Entity/tank");
+            tankImage = Content.Load<Texture2D>("Entity/tank");
 
-            using (MapBuilder mapBuilder = new MapBuilder(20, 20))
-            {
-                mapBuilder.Run();
-            }
+            //using (MapBuilder mapBuilder = new MapBuilder(20, 20))
+            //{
+            //    mapBuilder.Run();
+            //}
 
            
 
@@ -113,6 +120,7 @@ namespace Windows_XNA_Tanks
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
+            vermeulengbeast.UsedTank.Update();
            
             // TODO: Add your update logic here
 
@@ -130,7 +138,8 @@ namespace Windows_XNA_Tanks
             spriteBatch.Begin();
 
             map.Drawmap(spriteBatch);
-            
+            vermeulengbeast.UsedTank.Draw(spriteBatch);
+
 
             //foreach(Tile tile in map.Tiles)
             //{

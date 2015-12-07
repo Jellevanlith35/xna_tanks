@@ -9,15 +9,15 @@ namespace Windows_XNA_Tanks.Model
 {
     public abstract class Entity
     {
-        private Texture2D _texture;
-        private Point _point;
-        private Rectangle _rectangle;
+        public const int ENTITY_SIZE = 32;
 
-        public Entity(Texture2D texture, Point point)
+        private Texture2D _texture;
+        private Rectangle _rectangle;
+        private Vector2 _position;
+
+        public Entity(Texture2D texture)
         {
             this.Texture = texture;
-            this.Point = point;
-            this.Rectangle = new Rectangle(_point.X, _point.Y, 32, 32);
         }
 
         #region Methods
@@ -38,10 +38,10 @@ namespace Windows_XNA_Tanks.Model
            set { _texture = value; }
         }
 
-        public Point Point 
+        public Vector2 Position
         {
-            get { return _point; }
-            set { _point = value; }
+            get { return _position; }
+            set { _position = value; }
         }
 
         public Rectangle Rectangle

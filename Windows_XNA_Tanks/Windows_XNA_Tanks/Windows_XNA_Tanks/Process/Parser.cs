@@ -77,13 +77,13 @@ namespace Windows_XNA_Tanks.Process
                 switch (unparsedLine[index])
                 {
                     case ',':
-                        tile = new Grass(tankGame.grass, point);
+                        tile = new Grass(tankGame.grassImage, point);
                         break;
                     case '|':
-                        tile = new Street(tankGame.street, point);
+                        tile = new Street(tankGame.streetImage, point);
                         break;
                     case '#':
-                        tile = new Wall(tankGame.wall, point);
+                        tile = new Wall(tankGame.wallImage, point);
                         break;
                     default:
                         throw new Exception();

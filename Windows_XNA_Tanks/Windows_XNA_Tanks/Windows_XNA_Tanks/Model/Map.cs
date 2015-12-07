@@ -16,11 +16,12 @@ namespace Windows_XNA_Tanks.Model
         public int Height { get; set; }
         public int Width { get; set; }
         public Tile Origin { get; set; }
-        public List<Point> startPoints;
+        public List<Vector2> startPoints;
 
         public Map()
         {
-            startPoints = new List<Point>();
+            startPoints = new List<Vector2>();
+            startPoints.Add(new Vector2(64,64));
         }
         
         public void Drawmap(SpriteBatch spritebatch)
