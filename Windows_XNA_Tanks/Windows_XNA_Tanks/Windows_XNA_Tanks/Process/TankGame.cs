@@ -27,12 +27,13 @@ namespace Windows_XNA_Tanks
         Parser parser;
         Player vermeulengbeast;
         Computer vermeulengbeastAI;
+        Bullet bullet;
         List<Tank> ingameTanks;
 
         private const int TILE_SIZE= 32;
 
         // Tiles - Background
-        public Texture2D grassImage, streetImage, wallImage;
+        public Texture2D grassImage, streetImage, wallImage, bulletImage;
 
         // Tank
         private Texture2D tankImage;
@@ -66,19 +67,17 @@ namespace Windows_XNA_Tanks
 
             // Creating a Player + his adding a tank to his tanks + chosing the tank he wil use + giving him his position
             vermeulengbeast = new Player();
-            vermeulengbeast.addTanktoPlayersTanks(new Tank(tankImage));
+            vermeulengbeast.addTanktoPlayersTanks(new Tank(tankImage, bulletImage));
             vermeulengbeast.UsedTank = vermeulengbeast.tanks[0];
             vermeulengbeast.UsedTank.createPointAndRectangle(map.startPoints[0]);
 
             vermeulengbeastAI = new Computer();
-            vermeulengbeastAI.Tank = new Tank(tankImage);
+            vermeulengbeastAI.Tank = new Tank(tankImage, bulletImage);
             vermeulengbeastAI.Tank.createPointAndRectangle(map.startPoints[1]);
 
             ingameTanks = new List<Tank>();
             ingameTanks.Add(vermeulengbeast.UsedTank);
             ingameTanks.Add(vermeulengbeastAI.Tank);
-
-
         }
 
         /// <summary>
@@ -95,8 +94,9 @@ namespace Windows_XNA_Tanks
             streetImage = Content.Load<Texture2D>("Tiles/street");
             wallImage = Content.Load<Texture2D>("Tiles/wall");
 
-            // Tank
+            // Entities
             tankImage = Content.Load<Texture2D>("Entity/tank");
+            bulletImage = Content.Load<Texture2D>("Entity/bullet");
 
             //using (MapBuilder mapBuilder = new MapBuilder(20, 20))
             //{
@@ -135,15 +135,9 @@ namespace Windows_XNA_Tanks
             vermeulengbeast.Update();
             vermeulengbeast.UsedTank.Update();
 
+            // Computer
             vermeulengbeastAI.AimToClosestTank(ingameTanks);
-
-            //if (Keyboard.GetState().IsKeyDown(Keys.Space))
-            //{
-                vermeulengbeastAI.MoveToClosestTank();
-                vermeulengbeastAI.Tank.Update();
-            //}
-           
-            // TODO: Add your update logic here
+            vermeulengbeastAI.Tank.Update();
 
             base.Update(gameTime);
         }
@@ -161,12 +155,6 @@ namespace Windows_XNA_Tanks
             map.Drawmap(spriteBatch);
             vermeulengbeast.UsedTank.Draw(spriteBatch);
             vermeulengbeastAI.Tank.Draw(spriteBatch);
-
-
-            //foreach(Tile tile in map.Tiles)
-            //{
-            //    tile.Draw(spriteBatch);
-            //}
 
             spriteBatch.End();
             base.Draw(gameTime);

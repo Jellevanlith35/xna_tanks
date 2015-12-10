@@ -24,7 +24,7 @@ namespace Windows_XNA_Tanks.Model
 
         public abstract void Update();
 
-        public void Draw(SpriteBatch spritebatch)
+        public virtual void Draw(SpriteBatch spritebatch)
         {
             spritebatch.Draw(_texture, _rectangle, Color.White);
         }

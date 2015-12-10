@@ -29,6 +29,8 @@ namespace Windows_XNA_Tanks.Model
         {
             closestTank = GetClosestTank(tanks);
             Tank.Rotation = (float)Math.Atan2(closestTank.Position.Y - Tank.Position.Y, closestTank.Position.X - Tank.Position.X);
+
+            MoveToClosestTank();
         }
 
         public void MoveToClosestTank()

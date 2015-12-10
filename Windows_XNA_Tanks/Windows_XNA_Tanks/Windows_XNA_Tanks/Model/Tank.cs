@@ -29,11 +29,13 @@ namespace Windows_XNA_Tanks.Model
         float _tangentialVelocity;
         float _friction = 0.5f;
 
-        public Tank(Texture2D texture)
-            : base(texture)
+        public Bullet Bullet { get; set; }
+
+        public Tank(Texture2D tankTexture, Texture2D bulletTexture)
+            : base(tankTexture)
         {
-            Rectangle = new Rectangle((int)Position.X, (int)Position.Y, ENTITY_SIZE, ENTITY_SIZE);
-            _origin = new Vector2(Rectangle.Width / 2, Rectangle.Height / 2);
+            Bullet = new Bullet(bulletTexture);
+            PlaceBullet();
         }
 
         public float Rotation
@@ -64,12 +66,8 @@ namespace Windows_XNA_Tanks.Model
 
         public override void Update()
         {
-            Position = Velocity + Position;            
-        }
-
-        public void Draw(SpriteBatch spritebatch)
-        {
-            spritebatch.Draw(Texture, Position, null, Color.White, _rotation, _origin, 1f, SpriteEffects.None, 0);
+            Position = Velocity + Position;
+            Rectangle = new Rectangle((int)Position.X, (int)Position.Y, ENTITY_SIZE, ENTITY_SIZE);
         }
 
         public void MoveForward()
@@ -128,12 +126,33 @@ namespace Windows_XNA_Tanks.Model
             _rotation -= 0.02f;
         }
 
+        public void PlaceBullet()
+        {
+            Bullet.CreatePointAndRectangle(_origin);
+        }
+
+        public void FireBullet()
+        {
+
+        }
+
 
 
         public void createPointAndRectangle(Vector2 position)
         {
             Position = position;
             Rectangle = new Rectangle((int)Position.X,(int)Position.Y, ENTITY_SIZE, ENTITY_SIZE);
+            _origin = new Vector2(Rectangle.Width / 2, Rectangle.Height / 2);
+        }
+
+
+        public override void Draw(SpriteBatch spritebatch)
+        {
+            // Draw bullet
+            Bullet.Draw(spritebatch);
+
+            // Draw tank
+            spritebatch.Draw(Texture, Position, null, Color.White, _rotation, _origin, 1f, SpriteEffects.None, 0);
         }
 
         #endregion Methods
