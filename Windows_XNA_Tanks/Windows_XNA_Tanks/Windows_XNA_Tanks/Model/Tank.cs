@@ -6,13 +6,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Windows_XNA_Tanks.Interfaces;
 
 namespace Windows_XNA_Tanks.Model
 {
     public class Tank : Entity
     {
 
+        private ITurret _turret;
+
         private Vector2 _origin;
+        private Vector2 _turretPosition;
 
         private float _rotation;
 
