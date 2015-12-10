@@ -68,11 +68,11 @@ namespace Windows_XNA_Tanks
             vermeulengbeast = new Player();
             vermeulengbeast.addTanktoPlayersTanks(new Tank(tankImage));
             vermeulengbeast.UsedTank = vermeulengbeast.tanks[0];
-            vermeulengbeast.UsedTank.createPointandRetangle(map.startPoints[0]);
+            vermeulengbeast.UsedTank.createPointAndRectangle(map.startPoints[0]);
 
             vermeulengbeastAI = new Computer();
             vermeulengbeastAI.Tank = new Tank(tankImage);
-            vermeulengbeastAI.Tank.createPointandRetangle(map.startPoints[1]);
+            vermeulengbeastAI.Tank.createPointAndRectangle(map.startPoints[1]);
 
             ingameTanks = new List<Tank>();
             ingameTanks.Add(vermeulengbeast.UsedTank);

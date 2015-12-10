@@ -123,7 +123,7 @@ namespace Windows_XNA_Tanks.Model
         }
 
 
-        public void createPointandRetangle(Vector2 position)
+        public void createPointAndRectangle(Vector2 position)
         {
             Position = position;
             Rectangle = new Rectangle((int)Position.X,(int)Position.Y, ENTITY_SIZE, ENTITY_SIZE);

@@ -32,8 +32,8 @@ namespace Windows_XNA_Tanks.Model
 
         public void MoveToClosestTank()
         {
-            Tank.Velocity.X = (float)Math.Cos(Tank.Rotation) * Tank.TangentialVelocity;
-            Tank.Velocity.Y = (float)Math.Sin(Tank.Rotation) * Tank.TangentialVelocity;
+            Tank.Velocity.X = (float)Math.Cos(Tank.Rotation) * 5f; //Tank.TangentialVelocity;
+            Tank.Velocity.Y = (float)Math.Sin(Tank.Rotation) * 5f; //Tank.TangentialVelocity;
             Tank.Position = Tank.Velocity + Tank.Position;
         }
     }
