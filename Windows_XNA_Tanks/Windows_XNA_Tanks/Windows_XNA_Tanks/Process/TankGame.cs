@@ -26,6 +26,8 @@ namespace Windows_XNA_Tanks
         Map map;
         Parser parser;
         Player vermeulengbeast;
+        Computer vermeulengbeastAI;
+        List<Tank> ingameTanks;
 
         private const int TILE_SIZE= 32;
 
@@ -67,6 +69,16 @@ namespace Windows_XNA_Tanks
             vermeulengbeast.addTanktoPlayersTanks(new Tank(tankImage));
             vermeulengbeast.UsedTank = vermeulengbeast.tanks[0];
             vermeulengbeast.UsedTank.createPointandRetangle(map.startPoints[0]);
+
+            vermeulengbeastAI = new Computer();
+            vermeulengbeastAI.Tank = new Tank(tankImage);
+            vermeulengbeastAI.Tank.createPointandRetangle(map.startPoints[1]);
+
+            ingameTanks = new List<Tank>();
+            ingameTanks.Add(vermeulengbeast.UsedTank);
+            ingameTanks.Add(vermeulengbeastAI.Tank);
+
+
         }
 
         /// <summary>
@@ -121,6 +133,11 @@ namespace Windows_XNA_Tanks
                 this.Exit();
 
             vermeulengbeast.UsedTank.Update();
+
+            vermeulengbeastAI.AimToClosestTank(ingameTanks);
+
+            if(Keyboard.GetState().IsKeyDown(Keys.Space))
+                vermeulengbeastAI.MoveToClosestTank();
            
             // TODO: Add your update logic here
 
@@ -139,6 +156,7 @@ namespace Windows_XNA_Tanks
 
             map.Drawmap(spriteBatch);
             vermeulengbeast.UsedTank.Draw(spriteBatch);
+            vermeulengbeastAI.Tank.Draw(spriteBatch);
 
 
             //foreach(Tile tile in map.Tiles)

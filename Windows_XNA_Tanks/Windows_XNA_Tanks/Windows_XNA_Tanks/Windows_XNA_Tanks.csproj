@@ -74,6 +74,7 @@
   <ItemGroup>
     <Compile Include="Model\Entity.cs" />
     <Compile Include="Model\Map.cs" />
+    <Compile Include="Model\Computer.cs" />
     <Compile Include="Model\Player.cs" />
     <Compile Include="Model\Tank.cs" />
     <Compile Include="Model\Tiles\Grass.cs" />

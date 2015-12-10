@@ -22,6 +22,8 @@ namespace Windows_XNA_Tanks.Model
         {
             startPoints = new List<Vector2>();
             startPoints.Add(new Vector2(64,64));
+
+            startPoints.Add(new Vector2(256, 256));
         }
         
         public void Drawmap(SpriteBatch spritebatch)

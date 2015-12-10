@@ -16,40 +16,64 @@ namespace Windows_XNA_Tanks.Model
 
         private float _rotation;
 
-        private Vector2 _velocity;
-        const float _tangentialVelocity = 5f;
+        public Vector2 Velocity;
+        private float _tangentialVelocity = 5f;
         float friction = 0.1f;
+
+
 
         public Tank(Texture2D texture)
             : base(texture)
         {
-        
+            Rectangle = new Rectangle((int)Position.X, (int)Position.Y, ENTITY_SIZE, ENTITY_SIZE);
+            _origin = new Vector2(Rectangle.Width / 2, Rectangle.Height / 2);
+        }
+
+        public float Rotation
+        {
+            get
+            {
+                return _rotation;
+            }
+            set
+            {
+                _rotation = value;
+            }
+        }
+
+        public float TangentialVelocity
+        {
+            get
+            {
+                return _tangentialVelocity;
+            }
+            set
+            {
+                _tangentialVelocity = value;
+            }
         }
 
         #region Methods
 
         public override void Update()
         {
-
-            Rectangle = new Rectangle((int)Position.X, (int)Position.Y, ENTITY_SIZE, ENTITY_SIZE);
-            Position = _velocity + Position;
-            _origin = new Vector2(Rectangle.Width / 2, Rectangle.Height / 2);
+            Position = Velocity + Position;
 
             if (Keyboard.GetState().IsKeyDown(Keys.D)) _rotation += 0.1f;
             if (Keyboard.GetState().IsKeyDown(Keys.A)) _rotation -= 0.1f;
            
             if (Keyboard.GetState().IsKeyDown(Keys.W))
             {
-                _velocity.X = (float)Math.Cos(_rotation) * _tangentialVelocity;
-                _velocity.Y = (float)Math.Sin(_rotation) * _tangentialVelocity;
-            } 
-            else if (_velocity != Vector2.Zero)
+                Velocity.X = (float)Math.Cos(_rotation) * _tangentialVelocity;
+                Velocity.Y = (float)Math.Sin(_rotation) * _tangentialVelocity;
+            }
+            else if (Velocity != Vector2.Zero)
             {
-                float i = _velocity.X;
-                float j = _velocity.Y;
+                float i = Velocity.X;
+                float j = Velocity.Y;
 
-                _velocity.X = i -= friction * i;
-                _velocity.Y = j -= friction * j;
+                Velocity.X = i -= friction * i;
+                Velocity.Y = j -= friction * j;
             }
 
         }
