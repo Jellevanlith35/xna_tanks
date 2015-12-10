@@ -137,8 +137,11 @@ namespace Windows_XNA_Tanks
 
             vermeulengbeastAI.AimToClosestTank(ingameTanks);
 
-            if(Keyboard.GetState().IsKeyDown(Keys.Space))
+            //if (Keyboard.GetState().IsKeyDown(Keys.Space))
+            //{
                 vermeulengbeastAI.MoveToClosestTank();
+                vermeulengbeastAI.Tank.Update();
+            //}
            
             // TODO: Add your update logic here
 

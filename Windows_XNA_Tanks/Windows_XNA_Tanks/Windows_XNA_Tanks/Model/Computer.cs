@@ -10,6 +10,7 @@ namespace Windows_XNA_Tanks.Model
     public class Computer
     {
         public Tank Tank { get; set; }
+        private Tank closestTank;
 
         public Tank GetClosestTank(List<Tank> tanks)
         {
@@ -26,15 +27,15 @@ namespace Windows_XNA_Tanks.Model
 
         public void AimToClosestTank(List<Tank> tanks)
         {
-            Tank closestTank = GetClosestTank(tanks);
+            closestTank = GetClosestTank(tanks);
             Tank.Rotation = (float)Math.Atan2(closestTank.Position.Y - Tank.Position.Y, closestTank.Position.X - Tank.Position.X);
         }
 
         public void MoveToClosestTank()
         {
-            Tank.Velocity.X = (float)Math.Cos(Tank.Rotation) * 5f; //Tank.TangentialVelocity;
-            Tank.Velocity.Y = (float)Math.Sin(Tank.Rotation) * 5f; //Tank.TangentialVelocity;
-            Tank.Position = Tank.Velocity + Tank.Position;
+            Tank.MoveForward();
+            if (((float)(Math.Pow(Tank.Position.X - closestTank.Position.X, 2) + Math.Pow(Tank.Position.Y - closestTank.Position.Y, 2))) <= 10000)
+                Tank.StopMovingForward();
         }
     }
 }
