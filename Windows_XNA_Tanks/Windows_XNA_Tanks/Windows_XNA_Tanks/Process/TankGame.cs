@@ -132,6 +132,7 @@ namespace Windows_XNA_Tanks
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
+            vermeulengbeast.Update();
             vermeulengbeast.UsedTank.Update();
 
             vermeulengbeastAI.AimToClosestTank(ingameTanks);
