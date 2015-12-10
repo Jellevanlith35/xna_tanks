@@ -11,16 +11,19 @@ namespace Windows_XNA_Tanks.Model
 {
     public class Tank : Entity
     {
-        // Constructor
+
         private Vector2 _origin;
 
         private float _rotation;
 
         public Vector2 Velocity;
-        private float _tangentialVelocity = 5f;
-        float friction = 0.1f;
 
-
+        const float maxForwardVelocity = 2f;
+        const float maxBackwardVelocity = -1f;
+        const float _forwardAcceleration = 0.01f;
+        const float _backwardAcceleration = 0.005f;
+        float _tangentialVelocity;
+        float _friction = 0.5f;
 
         public Tank(Texture2D texture)
             : base(texture)
@@ -59,23 +62,59 @@ namespace Windows_XNA_Tanks.Model
         {
             Position = Velocity + Position;
 
-            if (Keyboard.GetState().IsKeyDown(Keys.D)) _rotation += 0.1f;
-            if (Keyboard.GetState().IsKeyDown(Keys.A)) _rotation -= 0.1f;
-           
+            if (Keyboard.GetState().IsKeyDown(Keys.D)) _rotation += 0.02f;
+            if (Keyboard.GetState().IsKeyDown(Keys.A)) _rotation -= 0.02f;
+            
+            // Forward moving
             if (Keyboard.GetState().IsKeyDown(Keys.W))
             {
                 Velocity.X = (float)Math.Cos(_rotation) * _tangentialVelocity;
                 Velocity.Y = (float)Math.Sin(_rotation) * _tangentialVelocity;
+            
+                // Making tank accelerate
+                if (_tangentialVelocity < maxForwardVelocity)
+                {
+                    _tangentialVelocity += _forwardAcceleration;
+                }
+
+                Velocity.X = (float)Math.Cos(_rotation) * _tangentialVelocity;
+                Velocity.Y = (float)Math.Sin(_rotation) * _tangentialVelocity;
             }
-            else if (Velocity != Vector2.Zero)
+            else if (Velocity != Vector2.Zero && !Keyboard.GetState().IsKeyDown(Keys.S))
             {
                 float i = Velocity.X;
                 float j = Velocity.Y;
+                _tangentialVelocity = 0f;
 
-                Velocity.X = i -= friction * i;
-                Velocity.Y = j -= friction * j;
+                // Decrease the speed.
+                Velocity.X = i -= _friction * i;
+                Velocity.Y = j -= _friction * j;
             }
 
+            // Backward moving
+            if (Keyboard.GetState().IsKeyDown(Keys.S))
+            {
+                // Making tank accelerate
+                if (_tangentialVelocity > maxBackwardVelocity)
+                {
+                    _tangentialVelocity -= _backwardAcceleration;
+                }
+
+                Velocity.X = (float)Math.Cos(_rotation) * _tangentialVelocity;
+                Velocity.Y = (float)Math.Sin(_rotation) * _tangentialVelocity;
+            }
+            else if (Velocity != Vector2.Zero && !Keyboard.GetState().IsKeyDown(Keys.W))
+            {
+                float i = Velocity.X;
+                float j = Velocity.Y;
+                _tangentialVelocity = 0f;
+
+                // Decrease the speed.
+                Velocity.X = i += _friction * i;
+                Velocity.Y = j += _friction * j;
+            }
+
+            
         }
 
         public void Draw(SpriteBatch spritebatch)

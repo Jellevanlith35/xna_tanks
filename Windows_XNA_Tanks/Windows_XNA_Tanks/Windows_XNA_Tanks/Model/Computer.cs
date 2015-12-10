@@ -38,7 +38,3 @@ namespace Windows_XNA_Tanks.Model
         }
     }
 }
-
-
-//Vector2 direction = playerPosition - enemyPosition;
-//direction.Normalize();
