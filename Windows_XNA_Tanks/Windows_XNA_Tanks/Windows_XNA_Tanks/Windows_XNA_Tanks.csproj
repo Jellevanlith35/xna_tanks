@@ -72,6 +72,7 @@
     <Reference Include="System.Net" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helper\CollisionHelper.cs" />
     <Compile Include="Interfaces\IBody.cs" />
     <Compile Include="Interfaces\IBullet.cs" />
     <Compile Include="Interfaces\ITurret.cs" />

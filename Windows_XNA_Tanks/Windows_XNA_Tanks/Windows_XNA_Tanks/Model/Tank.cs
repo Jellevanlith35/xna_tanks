@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Windows_XNA_Tanks.Helper;
 using Windows_XNA_Tanks.Interfaces;
 using Windows_XNA_Tanks.Model.Tiles;
 
@@ -135,10 +136,25 @@ namespace Windows_XNA_Tanks.Model
         public void createVectorAndRectangle(Vector2 position)
         {
             Position = position;
+            Position = new Vector2(Position.X + 16, Position.Y + 16);
             Rectangle = new Rectangle((int)Position.X,(int)Position.Y, ENTITY_SIZE, ENTITY_SIZE);
             _bodyBounds = new Rectangle((int)Position.X, (int)Position.Y, 24, 28);
             _origin = new Vector2(Rectangle.Width / 2, Rectangle.Height / 2);
             _turretPosition = new Vector2(Position.X, Position.Y);
+        }
+
+        public void Draw(SpriteBatch spritebatch, SpriteFont spriteFont)
+        {
+            // Draw bullet
+            Bullet.Draw(spritebatch);
+
+
+            // Draw tank
+            spritebatch.DrawString(spriteFont, Position.X + " - " + Position.Y, new Vector2(100, 100), Color.Black);
+            spritebatch.Draw(Texture, Position, null, Color.White, _rotation, _origin, 1f, SpriteEffects.None, 0);
+
+            if (MainGun != null)
+                MainGun.Draw(spritebatch);
         }
 
         public override void Draw(SpriteBatch spritebatch)
@@ -148,8 +164,8 @@ namespace Windows_XNA_Tanks.Model
 
             // Draw tank
             spritebatch.Draw(Texture, Position, null, Color.White, _rotation, _origin, 1f, SpriteEffects.None, 0);
-            
-            if(MainGun != null)
+
+            if (MainGun != null)
                 MainGun.Draw(spritebatch);
         }
         
@@ -165,7 +181,7 @@ namespace Windows_XNA_Tanks.Model
                 {
                     if (innerTile.IsSolid())
                     {
-                        WallCollision(innerTile.Rectangle);
+                        WallCollision(innerTile.Rectangle, innerTile.TextureData);
                     }
                     innerTile = innerTile.Right;
                 }
@@ -174,9 +190,15 @@ namespace Windows_XNA_Tanks.Model
             }
         }
 
-        public void WallCollision(Rectangle wallRectangle)
+        public void WallCollision(Rectangle wallRectangle, Color[] textureData)
         {
-            if (_bodyBounds.TouchTopOf(wallRectangle))
+            var y = Position;            
+            if(CollisionHelper.IntersecsPixel(Rectangle, TextureData, wallRectangle, textureData))
+            {
+                var x = 0; 
+            }
+
+            /*if (_bodyBounds.TouchTopOf(wallRectangle))
             {
                 _bodyBounds.Y = wallRectangle.Y - _bodyBounds.Height;
                 StopMovingForward();
@@ -195,7 +217,7 @@ namespace Windows_XNA_Tanks.Model
             {
                 _bodyBounds.Y = wallRectangle.Y - _bodyBounds.Height;
                 StopMovingForward();
-            }
+            }*/
         }
 
         #endregion Methods

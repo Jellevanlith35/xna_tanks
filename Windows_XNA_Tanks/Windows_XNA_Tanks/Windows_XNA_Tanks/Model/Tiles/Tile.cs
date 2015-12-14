@@ -10,6 +10,7 @@ namespace Windows_XNA_Tanks.Model.Tiles
     public abstract class Tile
     {
         public Texture2D _texture;
+        private Color[] _textureData;
         public Point _point;
         public Rectangle _rectangle;
 
@@ -23,6 +24,8 @@ namespace Windows_XNA_Tanks.Model.Tiles
         public Tile(Texture2D texture, Point point)
         {
             this.Texture = texture;
+            _textureData = new Color[Texture.Width * texture.Height];
+            Texture.GetData(_textureData);
             this.Point = point;
             this.Rectangle = new Rectangle(_point.X, _point.Y, 32, 32);
         }
@@ -45,6 +48,12 @@ namespace Windows_XNA_Tanks.Model.Tiles
         {
             get { return _texture; }
             set { _texture = value; }
+        }
+
+        public Color[] TextureData
+        {
+            get { return _textureData; }
+            set { _textureData = value; }
         }
 
         public Point Point

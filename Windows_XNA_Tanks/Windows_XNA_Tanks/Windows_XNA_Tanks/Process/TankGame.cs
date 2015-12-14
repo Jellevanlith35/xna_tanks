@@ -39,6 +39,8 @@ namespace Windows_XNA_Tanks
         // Tank
         private Texture2D tankImage, bodyImage, turretImage;
 
+        private SpriteFont spriteFont;
+
        
         public TankGame()
         {
@@ -76,8 +78,9 @@ namespace Windows_XNA_Tanks
 
             // Computer
             vermeulengbeastAI = new Computer();
-            vermeulengbeastAI.Tank = new Tank(tankImage, bulletImage, map);
+            vermeulengbeastAI.Tank = new Tank(bodyImage, bulletImage, map);
             vermeulengbeastAI.Tank.createVectorAndRectangle(map.startPoints[1]);
+            vermeulengbeastAI.Tank.MainGun = new StandaardTurret(vermeulengbeastAI.Tank, turretImage);
 
             ingameTanks = new List<Tank>();
             ingameTanks.Add(vermeulengbeast.UsedTank);
@@ -103,6 +106,8 @@ namespace Windows_XNA_Tanks
             bodyImage = Content.Load<Texture2D>("Entity/body");
             turretImage = Content.Load<Texture2D>("Entity/turret");
             bulletImage = Content.Load<Texture2D>("Entity/bullet");
+
+            spriteFont = Content.Load<SpriteFont>("Font/Arial");
 
             //using (MapBuilder mapBuilder = new MapBuilder(20, 20))
             //{
@@ -159,7 +164,7 @@ namespace Windows_XNA_Tanks
             spriteBatch.Begin();
 
             map.Drawmap(spriteBatch);
-            vermeulengbeast.UsedTank.Draw(spriteBatch);
+            vermeulengbeast.UsedTank.Draw(spriteBatch, spriteFont);
             vermeulengbeastAI.Tank.Draw(spriteBatch);
 
             spriteBatch.End();

@@ -19,7 +19,7 @@ namespace Windows_XNA_Tanks.Model
             foreach(Tank opponent in tanks)
             {
                 if(opponent != Tank)
-                    distances.Add(opponent, (float)(Math.Pow(Tank.Position.X - opponent.Position.X, 2) + Math.Pow(Tank.Position.Y - opponent.Position.Y, 2)));
+                    distances.Add(opponent, Vector2.Distance(Tank.Position, opponent.Position));
             }
 
             return distances.OrderBy(e => e.Value).LastOrDefault().Key;
@@ -36,7 +36,7 @@ namespace Windows_XNA_Tanks.Model
         public void MoveToClosestTank()
         {
             Tank.MoveForward();
-            if (((float)(Math.Pow(Tank.Position.X - closestTank.Position.X, 2) + Math.Pow(Tank.Position.Y - closestTank.Position.Y, 2))) <= 10000)
+            if (Vector2.Distance(Tank.Position, closestTank.Position) <= 100)
                 Tank.StopMovingForward();
         }
     }
