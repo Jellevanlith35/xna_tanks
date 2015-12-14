@@ -15,5 +15,10 @@ namespace Windows_XNA_Tanks.Model.Tiles
         {
            
         }
+
+        public override bool IsSolid()
+        {
+            return true;
+        }
     }
 }

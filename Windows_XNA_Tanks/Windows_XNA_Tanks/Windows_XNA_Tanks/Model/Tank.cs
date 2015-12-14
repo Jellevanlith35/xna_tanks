@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Windows_XNA_Tanks.Interfaces;
+using Windows_XNA_Tanks.Model.Tiles;
 
 namespace Windows_XNA_Tanks.Model
 {
@@ -14,9 +15,12 @@ namespace Windows_XNA_Tanks.Model
     {
 
         private ITurret _turret;
+        private IBody _body;
+        private IWheels _wheels;
 
         private Vector2 _origin;
-        private Vector2 _turretPosition;
+        public Vector2 _turretPosition;
+        public Rectangle _bodyBounds;
 
         private float _rotation;
 
@@ -31,43 +35,33 @@ namespace Windows_XNA_Tanks.Model
 
         public Bullet Bullet { get; set; }
 
-        public Tank(Texture2D tankTexture, Texture2D bulletTexture)
+        public Tank(Texture2D tankTexture, Texture2D bulletTexture, Map map)
             : base(tankTexture)
         {
+            Map = map;
             Bullet = new Bullet(bulletTexture);
             PlaceBullet();
         }
-
-        public float Rotation
+        
+        public ITurret MainGun
         {
-            get
-            {
-                return _rotation;
-            }
-            set
-            {
-                _rotation = value;
-            }
-        }
-
-        public float TangentialVelocity
-        {
-            get
-            {
-                return _tangentialVelocity;
-            }
-            set
-            {
-                _tangentialVelocity = value;
-            }
+            get { return _turret; }
+            set { _turret = value; }
         }
 
         #region Methods
 
         public override void Update()
         {
-            Position = Velocity + Position;
+            CheckWallCollision();
+            
+            Position += Velocity;
             Rectangle = new Rectangle((int)Position.X, (int)Position.Y, ENTITY_SIZE, ENTITY_SIZE);
+            _bodyBounds = new Rectangle((int)Position.X, (int)Position.Y, 24, 28);
+
+            if (MainGun != null)
+                MainGun.Update();
+                _turretPosition = new Vector2(Position.X, Position.Y);
         }
 
         public void MoveForward()
@@ -119,11 +113,13 @@ namespace Windows_XNA_Tanks.Model
         public void RotateRight()
         {
             _rotation += 0.02f;
+            MainGun.TurnRight();
         }
         
         public void RotateLeft()
         {
             _rotation -= 0.02f;
+            MainGun.TurnLeft();
         }
 
         public void PlaceBullet()
@@ -136,15 +132,14 @@ namespace Windows_XNA_Tanks.Model
 
         }
 
-
-
-        public void createPointAndRectangle(Vector2 position)
+        public void createVectorAndRectangle(Vector2 position)
         {
             Position = position;
             Rectangle = new Rectangle((int)Position.X,(int)Position.Y, ENTITY_SIZE, ENTITY_SIZE);
+            _bodyBounds = new Rectangle((int)Position.X, (int)Position.Y, 24, 28);
             _origin = new Vector2(Rectangle.Width / 2, Rectangle.Height / 2);
+            _turretPosition = new Vector2(Position.X, Position.Y);
         }
-
 
         public override void Draw(SpriteBatch spritebatch)
         {
@@ -153,9 +148,81 @@ namespace Windows_XNA_Tanks.Model
 
             // Draw tank
             spritebatch.Draw(Texture, Position, null, Color.White, _rotation, _origin, 1f, SpriteEffects.None, 0);
+            
+            if(MainGun != null)
+                MainGun.Draw(spritebatch);
+        }
+        
+        public void CheckWallCollision()
+        {
+            Tile outerTile = Map.Origin;
+
+            while (outerTile != null)
+            {
+                Tile innerTile = outerTile;
+
+                while (innerTile != null)
+                {
+                    if (innerTile.IsSolid())
+                    {
+                        WallCollision(innerTile.Rectangle);
+                    }
+                    innerTile = innerTile.Right;
+                }
+
+                outerTile = outerTile.Bottom;
+            }
+        }
+
+        public void WallCollision(Rectangle wallRectangle)
+        {
+            if (_bodyBounds.TouchTopOf(wallRectangle))
+            {
+                _bodyBounds.Y = wallRectangle.Y - _bodyBounds.Height;
+                StopMovingForward();
+            }
+            if (_bodyBounds.TouchLeftOf(wallRectangle))
+            {
+                _bodyBounds.Y = wallRectangle.Y - _bodyBounds.Height;
+                StopMovingForward();
+            }
+            if (_bodyBounds.TouchBottomOf(wallRectangle))
+            {
+                _bodyBounds.Y = wallRectangle.Y - _bodyBounds.Height;
+                StopMovingForward();
+            }
+            if (_bodyBounds.TouchRightOf(wallRectangle))
+            {
+                _bodyBounds.Y = wallRectangle.Y - _bodyBounds.Height;
+                StopMovingForward();
+            }
         }
 
         #endregion Methods
+
+        public float Rotation
+        {
+            get
+            {
+                return _rotation;
+            }
+            set
+            {
+                _rotation = value;
+            }
+        }
+
+        public float TangentialVelocity
+        {
+            get
+            {
+                return _tangentialVelocity;
+            }
+            set
+            {
+                _tangentialVelocity = value;
+            }
+        }
 
     }
 }

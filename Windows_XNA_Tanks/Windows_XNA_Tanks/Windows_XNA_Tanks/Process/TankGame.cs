@@ -13,6 +13,7 @@ using Windows_XNA_Tanks.Model.Tiles;
 using System.IO;
 using Windows_XNA_Tanks.Process;
 using Windows_XNA_Tanks_Map_Builder;
+using Windows_XNA_Tanks.Model.Turrets;
 
 namespace Windows_XNA_Tanks
 {
@@ -36,7 +37,7 @@ namespace Windows_XNA_Tanks
         public Texture2D grassImage, streetImage, wallImage, bulletImage;
 
         // Tank
-        private Texture2D tankImage;
+        private Texture2D tankImage, bodyImage, turretImage;
 
        
         public TankGame()
@@ -67,13 +68,16 @@ namespace Windows_XNA_Tanks
 
             // Creating a Player + his adding a tank to his tanks + chosing the tank he wil use + giving him his position
             vermeulengbeast = new Player();
-            vermeulengbeast.addTanktoPlayersTanks(new Tank(tankImage, bulletImage));
+            vermeulengbeast.addTanktoPlayersTanks(new Tank(bodyImage, bulletImage, map));
             vermeulengbeast.UsedTank = vermeulengbeast.tanks[0];
-            vermeulengbeast.UsedTank.createPointAndRectangle(map.startPoints[0]);
+            vermeulengbeast.UsedTank.createVectorAndRectangle(map.startPoints[0]);
 
+            vermeulengbeast.tanks[0].MainGun = new StandaardTurret(vermeulengbeast.tanks[0], turretImage);
+
+            // Computer
             vermeulengbeastAI = new Computer();
-            vermeulengbeastAI.Tank = new Tank(tankImage, bulletImage);
-            vermeulengbeastAI.Tank.createPointAndRectangle(map.startPoints[1]);
+            vermeulengbeastAI.Tank = new Tank(tankImage, bulletImage, map);
+            vermeulengbeastAI.Tank.createVectorAndRectangle(map.startPoints[1]);
 
             ingameTanks = new List<Tank>();
             ingameTanks.Add(vermeulengbeast.UsedTank);
@@ -96,11 +100,13 @@ namespace Windows_XNA_Tanks
 
             // Entities
             tankImage = Content.Load<Texture2D>("Entity/tank");
+            bodyImage = Content.Load<Texture2D>("Entity/body");
+            turretImage = Content.Load<Texture2D>("Entity/turret");
             bulletImage = Content.Load<Texture2D>("Entity/bullet");
 
             //using (MapBuilder mapBuilder = new MapBuilder(20, 20))
             //{
-            //    mapBuilder.Run();
+            //   mapBuilder.Run();
             //}
 
            
@@ -159,5 +165,6 @@ namespace Windows_XNA_Tanks
             spriteBatch.End();
             base.Draw(gameTime);
         }
+
     }
 }

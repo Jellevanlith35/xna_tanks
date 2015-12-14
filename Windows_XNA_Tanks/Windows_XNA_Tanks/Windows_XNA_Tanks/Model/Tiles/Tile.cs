@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Windows_XNA_Tanks.Model.Tiles
 {
-    abstract class Tile
+    public abstract class Tile
     {
         public Texture2D _texture;
         public Point _point;
@@ -30,6 +30,11 @@ namespace Windows_XNA_Tanks.Model.Tiles
         public void Draw(SpriteBatch spritebatch)
         {
             spritebatch.Draw(_texture, _rectangle, Color.White);
+        }
+
+        public virtual bool IsSolid()
+        {
+            return false;
         }
         
         #endregion Methods

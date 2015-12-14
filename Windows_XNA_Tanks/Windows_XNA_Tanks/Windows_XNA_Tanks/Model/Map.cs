@@ -10,7 +10,7 @@ using Windows_XNA_Tanks.Model.Tiles;
 
 namespace Windows_XNA_Tanks.Model
 {
-    class Map
+    public class Map
     {
 
         public int Height { get; set; }

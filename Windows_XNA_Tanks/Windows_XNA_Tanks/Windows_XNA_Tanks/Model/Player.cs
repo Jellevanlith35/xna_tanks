@@ -41,6 +41,17 @@ namespace Windows_XNA_Tanks.Model
                 UsedTank.StopMovingBackward();
             }
 
+            // Rotation of the MainGun
+            if (Keyboard.GetState().IsKeyDown(Keys.O))
+            {
+                UsedTank.MainGun.TurnLeft();
+            }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.P))
+            {
+                UsedTank.MainGun.TurnRight();
+            }
+
         }
 
         public void addTanktoPlayersTanks(Tank tank)

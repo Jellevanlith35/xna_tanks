@@ -8,7 +8,7 @@ using Windows_XNA_Tanks.Interfaces;
 
 namespace Windows_XNA_Tanks.Model.Turrets
 {
-    public abstract class StandaardTurret : ITurret
+    public class StandaardTurret : ITurret
     {
 
         private Texture2D _texture;
@@ -16,16 +16,27 @@ namespace Windows_XNA_Tanks.Model.Turrets
         private Vector2 _positionOnTank;
         private float _rotation;
         private Vector2 _origin;
+        private Tank _tank;
 
-        public void StandaardTurret()
+        public StandaardTurret(Tank tank, Texture2D texture)
         {
-            _rectangle = new Rectangle((int)_positionOnTank.X, (int)_positionOnTank.Y, _texture.Width, _texture.Height);
-            _origin = new Vector2(_rectangle.Width / 2, _rectangle.Height / 2);
+            Tank = tank;
+            PositionOnTank = Tank._turretPosition;
+            Texture = texture;
+            Rectangle = new Rectangle((int)_positionOnTank.X, (int)_positionOnTank.Y, _texture.Width, _texture.Height);
+            Origin = new Vector2(_rectangle.Width / 2, _rectangle.Height / 2);
         }
 
         public void Draw(SpriteBatch spritebatch)
         {
             spritebatch.Draw(_texture, _positionOnTank, null, Color.White, _rotation, _origin, 1f, SpriteEffects.None, 0);
+        }
+
+        public void Update()
+        {
+            PositionOnTank = Tank._turretPosition;
+            Rectangle = new Rectangle((int)_positionOnTank.X, (int)_positionOnTank.Y, _texture.Width, _texture.Height);
+            Origin = new Vector2(_rectangle.Width / 2, _rectangle.Height / 2);
         }
 
         public void Shoot()
@@ -55,6 +66,30 @@ namespace Windows_XNA_Tanks.Model.Turrets
         {
             get { return _texture; }
             set { _texture = value; }
+        }
+
+        public Rectangle Rectangle
+        {
+            get { return _rectangle; }
+            set { _rectangle = value; }
+        }
+         
+        public float Rotation 
+        {
+            get { return _rotation; }
+            set { _rotation = value; }
+        }
+
+        public Vector2 Origin
+        {
+            get { return _origin; }
+            set { _origin = value; }
+        }
+
+        public Tank Tank
+        {
+            get { return _tank; }
+            set { _tank = value; }
         }
     }
 }
